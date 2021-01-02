@@ -8,7 +8,10 @@ services:
     - DB_NAME=redmine_production
 
   redmine:
-    image: sameersbn/redmine:4.0.3-2
+    build:
+      context: .
+      dockerfile: ./redmine/Dockerfile
+    # image: sameersbn/redmine:4.0.3-2
     depends_on:
     - postgresql
     environment:
