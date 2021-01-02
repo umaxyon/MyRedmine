@@ -6,6 +6,8 @@ services:
     - DB_USER=redmine
     - DB_PASS=password
     - DB_NAME=redmine_production
+    volumes:
+    - ./volumes/postgresql:/var/lib/postgresql
 
   redmine:
     build:
