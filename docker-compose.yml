@@ -27,11 +27,11 @@ services:
       REDMINE_DB_ENCODING: utf8
     volumes:
       - ./volumes/redmine/files:/usr/src/redmine/files
+      - ./volumes/redmine/plugins:/usr/src/redmine/plugins
     links:
       - postgresql
 
   postgresql:
-    container_name: db
     image: postgres
     restart: always
     ports:
