@@ -7,7 +7,6 @@ services:
     - redmine
     environment:
       TZ: ${TZ}
-    build: ./nginx
     volumes:
       - ./volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf
     hostname: nginx
