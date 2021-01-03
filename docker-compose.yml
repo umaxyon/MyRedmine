@@ -3,6 +3,8 @@ services:
   nginx:
     image: nginx
     restart: always
+    depends_on:
+    - redmine
     environment:
       TZ: ${TZ}
     build: ./nginx
@@ -15,6 +17,8 @@ services:
   redmine:
     build: ./redmine
     restart: always
+    depends_on:
+    - postgresql
     environment:
       TZ: ${TZ}
       REDMINE_DB_POSTGRES: db
@@ -23,56 +27,14 @@ services:
       REDMINE_DB_ENCODING: utf8
       REDMINE_DB_PORT: 5432
 
-  db:
+  postgresql:
+    container_name: db
     image: postgres
     restart: always
     environment:
+      TZ: ${TZ}
+      POSTGRES_DB: redmine_production
+      POSTGRES_USER: redmine
       POSTGRES_PASSWORD: dbumauma
-
-
-  postgresql:
-    image: sameersbn/postgresql:9.6-4
-    environment:
-    - DB_USER=redmine
-    - DB_PASS=password
-    - DB_NAME=redmine_production
     volumes:
-    - ./volumes/postgresql:/var/lib/postgresql
-
-      image    build:
-      context: .
-      dockerfile: ./redmine/Dockerfile
-    # image: sameersbn/redmine:4.0.3-2
-
-    depends_on:
-    - postgresql
-    environment:
-    - TZ=Asia/Tokyo
-
-    - DB_ADAPTER=postgresql
-    - DB_HOST=postgresql
-    - DB_PORT=5432
-    - DB_USER=redmine
-    - DB_PASS=password
-    - DB_NAME=redmine_production
-
-    - REDMINE_PORT=443
-    - REDMINE_HTTPS=true
-    - REDMINE_RELATIVE_URL_ROOT=
-    - REDMINE_SECRET_TOKEN=
-    - NGINX_HSTS_MAXAGE=2592000
-
-    - REDMINE_SUDO_MODE_ENABLED=false
-    - REDMINE_SUDO_MODE_TIMEOUT=15
-
-    - REDMINE_CONCURRENT_UPLOADS=2
-
-    - REDMINE_BACKUP_SCHEDULE=
-    - REDMINE_BACKUP_EXPIRY=
-    - REDMINE_BACKUP_TIME=
-
-    ports:
-    - 443:443
-    - 80:80
-    volumes:
-    - ./volumes/redmine/certs:/home/redmine/data/certs
+      - ./volumes/postgresql:/var/lib/postgresql/data
