@@ -21,9 +21,12 @@ services:
     environment:
       TZ: ${TZ}
       REDMINE_DB_POSTGRES: postgresql
+      REDMINE_DB_DATABASE: redmine
       REDMINE_DB_USERNAME: redmine
       REDMINE_DB_PASSWORD: dbumauma
       REDMINE_DB_ENCODING: utf8
+    volumes:
+      - ./volumes/redmine/files:/usr/src/redmine/files
 
   postgresql:
     container_name: db
@@ -32,6 +35,7 @@ services:
     ports:
       - 5432:5432
     environment:
+      POSTGRES_ROOT_PASSWORD: postgres
       TZ: ${TZ}
       POSTGRES_DB: redmine
       POSTGRES_USER: redmine
