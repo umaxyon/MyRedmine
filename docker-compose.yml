@@ -28,7 +28,7 @@ services:
     volumes:
       - ./volumes/redmine/files:/usr/src/redmine/files
     links:
-      - postgres
+      - postgresql
 
   postgresql:
     container_name: db
