@@ -20,7 +20,7 @@ services:
     - postgresql
     environment:
       TZ: ${TZ}
-      REDMINE_DB_POSTGRES: postgres
+      REDMINE_DB_POSTGRES: postgresql
       REDMINE_DB_USERNAME: redmine
       REDMINE_DB_PASSWORD: dbumauma
       REDMINE_DB_ENCODING: utf8
