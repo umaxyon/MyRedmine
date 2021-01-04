@@ -7,7 +7,6 @@ services:
     - 3000:3000
     depends_on:
     - postgresql
-    - memcached
     environment:
       TZ: ${TZ}
       REDMINE_DB_POSTGRES: postgresql
@@ -16,7 +15,6 @@ services:
       REDMINE_DB_PASSWORD: dbumauma
       REDMINE_DB_ENCODING: utf8
     volumes:
-      - ./redmine/additional_environment.rb:/usr/src/redmine/config/additional_environment.rb
       - ./volumes/redmine/files:/usr/src/redmine/files
       - ./volumes/redmine/plugins:/usr/src/redmine/plugins
     links:
