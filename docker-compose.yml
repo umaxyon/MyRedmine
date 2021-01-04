@@ -1,23 +1,13 @@
 version: '3'
 services:
-  nginx:
-    build: ./nginx
-    restart: always
-    depends_on:
-    - redmine
-    environment:
-      TZ: ${TZ}
-    volumes:
-      - ./volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    hostname: nginx
-    ports:
-      - "80:80"
-
   redmine:
     build: ./redmine
     restart: always
+    ports: 
+    - 3000:3000
     depends_on:
     - postgresql
+    - memcached
     environment:
       TZ: ${TZ}
       REDMINE_DB_POSTGRES: postgresql
@@ -26,6 +16,7 @@ services:
       REDMINE_DB_PASSWORD: dbumauma
       REDMINE_DB_ENCODING: utf8
     volumes:
+      - ./redmine/additional_environment.rb:/usr/src/redmine/config/additional_environment.rb
       - ./volumes/redmine/files:/usr/src/redmine/files
       - ./volumes/redmine/plugins:/usr/src/redmine/plugins
     links:
@@ -44,3 +35,6 @@ services:
       POSTGRES_PASSWORD: dbumauma
     volumes:
       - ./volumes/postgresql:/var/lib/postgresql/data
+  memcached:
+    image: memcached
+    restart: always
