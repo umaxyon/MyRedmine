@@ -17,8 +17,6 @@ services:
     volumes:
       - ./volumes/redmine/files:/usr/src/redmine/files
       - ./volumes/redmine/plugins:/usr/src/redmine/plugins
-    links:
-      - postgresql
 
   postgresql:
     image: postgres
@@ -33,6 +31,3 @@ services:
       POSTGRES_PASSWORD: dbumauma
     volumes:
       - ./volumes/postgresql:/var/lib/postgresql/data
-  memcached:
-    image: memcached
-    restart: always
